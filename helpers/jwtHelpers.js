@@ -6,7 +6,7 @@ async function generateToken(user) {
   };
 
   const options = {
-    expiresIn: '5d',
+    expiresIn: '7d',
   };
   try {
     const token = await jwt.sign(payload, process.env.JWTSecret, options);

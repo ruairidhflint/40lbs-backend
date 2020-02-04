@@ -1,6 +1,7 @@
 const bcrypt = require('bcrypt');
 const helpers = require('../helpers/userHelpers');
 const { generateToken } = require('../helpers/jwtHelpers');
+const { sendEmailConfirmAccount } = require('../helpers/mail');
 
 async function createUser(req, res) {
   const { email, password, currentWeight } = req.body;
@@ -12,6 +13,8 @@ async function createUser(req, res) {
       currentWeight,
     });
     if (newUser) {
+      const token = await generateToken({ id: newUser[0], email });
+      sendEmailConfirmAccount({ email }, token, 'https://www.google.com');
       res.status(200).json({ message: 'User successfully registered' });
     } else {
       res
