@@ -10,6 +10,12 @@ function getUserByEmail(email) {
     .first();
 }
 
+function getUserByID(id) {
+  return db('users')
+    .where({ id })
+    .first();
+}
+
 function registerNewUser(user) {
   return db('users').insert(user, 'id');
 }
@@ -29,6 +35,7 @@ function confirmUser(id) {
 module.exports = {
   getAllUsers,
   getUserByEmail,
+  getUserByID,
   registerNewUser,
   deleteUser,
   confirmUser,

@@ -1,8 +1,9 @@
 const jwt = require('jsonwebtoken');
+const helper = require('../helpers/userHelpers');
 
 async function generateToken(user) {
   const payload = {
-    subject: user.id,
+    id: user.id,
   };
 
   const options = {
@@ -16,17 +17,18 @@ async function generateToken(user) {
   }
 }
 
-// async function decodeToken(token) {
-//   try {
-//     const decoded = jwt.verify(token, JWTSecret)
-//     const user = await User.findById(decoded.subject).exec();
-//     if(!user) throw Error('no such user');
-//     return user;
-//   } catch (error) {
-//     return null
-//   }
-// }
+async function decodeToken(token) {
+  try {
+    const decoded = jwt.verify(token, process.env.JWTSecret);
+    const user = await helper.getUserByID(decoded.id);
+    if (!user) throw Error('No user with that ID exists');
+    return user;
+  } catch (error) {
+    return null;
+  }
+}
 
 module.exports = {
   generateToken,
+  decodeToken,
 };
