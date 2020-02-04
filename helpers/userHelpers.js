@@ -11,8 +11,7 @@ function getUserByEmail(email) {
 }
 
 function registerNewUser(user) {
-  return db('users')
-    .insert(user, 'id');
+  return db('users').insert(user, 'id');
 }
 
 function deleteUser(id) {
@@ -21,9 +20,16 @@ function deleteUser(id) {
     .del();
 }
 
+function confirmUser(id) {
+  return db('users')
+    .where({ id })
+    .update({ confirmed: true });
+}
+
 module.exports = {
   getAllUsers,
   getUserByEmail,
   registerNewUser,
   deleteUser,
+  confirmUser,
 };
