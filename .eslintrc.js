@@ -16,5 +16,6 @@ module.exports = {
   },
   rules: {
     'no-console': 0,
+    'func-names': 0,
   },
 };
