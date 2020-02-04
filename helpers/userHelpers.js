@@ -1,7 +1,7 @@
 const db = require('../database/dbConfig');
 
 function getAllUsers() {
-  return db('users').select('username', 'id');
+  return db('users').select('email', 'id');
 }
 
 function getUserByEmail(email) {

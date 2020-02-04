@@ -1,5 +1,6 @@
 const express = require('express');
 const authMiddleware = require('../middleware/authMiddleware');
+const helpers = require('../helpers/userHelpers');
 
 const Router = express.Router();
 
@@ -21,14 +22,21 @@ const Router = express.Router();
 - JSON Web Token send and stored -somewhere- to authenticate
 
 */
-
-Router.get('/', (req, res) => {
-  res.status(200).json({ message: 'User Route Working' });
+Router.get('/', async (req, res) => {
+  try {
+    const users = await helpers.getAllUsers();
+    res.status(200).json({ message: 'User Route Working', users });
+  } catch (error) {
+    res.status(500).json({ error });
+  }
 });
 
 Router.post(
   '/register',
-  [authMiddleware.checkAllRegisterFieldsPresent],
+  [
+    authMiddleware.checkAllRegisterFieldsPresent,
+    authMiddleware.checkIfUserExists,
+  ],
   (req, res) => {
     res.status(200).json({ message: 'You made it!' });
   },
