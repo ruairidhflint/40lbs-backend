@@ -7,8 +7,11 @@ const Router = express.Router();
 @@@ Routes needed @@@
 
 @ Register @
-- Requires valid email, password and current weight
 - POST to '/register'
+- Requires valid email, password and current weight.
+- email must be a valid email, current weight must be numeric
+- password must contain 8 characters
+- email mustn't already be in use
 - bcrypt to hash password
 
 @ Log in @
