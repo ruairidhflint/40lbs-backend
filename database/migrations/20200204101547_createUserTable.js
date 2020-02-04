@@ -6,7 +6,8 @@ exports.up = function (knex) {
       .notNullable()
       .unique();
     table.string('password').notNullable();
-    table.float('current_weight').notNullable();
+    table.float('currentWeight').notNullable();
+    table.boolean('confirmed').notNullable();
   });
 };
 
