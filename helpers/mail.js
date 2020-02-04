@@ -27,13 +27,12 @@ async function sendEmailConfirmAccount(user, token, url) {
     },
   };
   const emailBody = mailGenerator.generate(mail);
-
   const emailText = mailGenerator.generatePlaintext(mail);
 
   const mailOption = {
     from: 'roryflintphoto@gmail.com',
     to: user.email,
-    subject: 'Confirm your email',
+    subject: '40lbs - Confirm your email',
     html: emailBody,
     text: emailText,
   };
