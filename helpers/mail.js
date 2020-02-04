@@ -40,4 +40,6 @@ async function sendEmailConfirmAccount(user, token, url) {
   return confirmMail;
 }
 
-module.exports = { sendEmailConfirmAccount };
+module.exports = {
+  sendEmailConfirmAccount,
+};
