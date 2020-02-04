@@ -3,7 +3,7 @@ const Validator = require('validatorjs');
 function checkNewWeightIsValid(req, res, next) {
   const validator = new Validator(req.body, {
     date: 'required',
-    weight: 'required|numeric',
+    current_weight: 'required|numeric',
     user_id: 'required|numeric',
   });
   if (validator.fails()) {
