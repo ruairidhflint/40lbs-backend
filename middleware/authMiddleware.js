@@ -33,7 +33,22 @@ async function checkIfUserExists(req, res, next) {
   }
 }
 
+function checkLoginDetailsPresent(req, res, next) {
+  const validator = new Validator(req.body, {
+    password: 'required|min:8',
+    email: 'required|email',
+  });
+  if (validator.fails()) {
+    res
+      .status(400)
+      .json({ message: 'Please ensure all fields are present and valid' });
+  } else {
+    next();
+  }
+}
+
 module.exports = {
   checkAllRegisterFieldsPresent,
   checkIfUserExists,
+  checkLoginDetailsPresent,
 };
