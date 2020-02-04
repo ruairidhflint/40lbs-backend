@@ -1,7 +1,6 @@
 const express = require('express');
-const bcrypt = require('bcrypt');
+const userController = require('../controllers/userController');
 const authMiddleware = require('../middleware/authMiddleware');
-const helpers = require('../helpers/userHelpers');
 
 const Router = express.Router();
 
@@ -23,13 +22,8 @@ const Router = express.Router();
 - JSON Web Token send and stored -somewhere- to authenticate
 */
 
-Router.get('/', async (req, res) => {
-  try {
-    const users = await helpers.getAllUsers();
-    res.status(200).json({ message: 'User Route Working', users });
-  } catch (error) {
-    res.status(500).json({ error });
-  }
+Router.get('/', (req, res) => {
+  res.status(200).json({ message: 'User Route Working' });
 });
 
 Router.post(
@@ -38,28 +32,7 @@ Router.post(
     authMiddleware.checkAllRegisterFieldsPresent,
     authMiddleware.checkIfUserExists,
   ],
-  async (req, res) => {
-    const { email, password, currentWeight } = req.body;
-    const hashedPassword = bcrypt.hashSync(password, 12);
-    try {
-      const newUser = await helpers.registerNewUser({
-        email,
-        password: hashedPassword,
-        current_weight: currentWeight,
-      });
-      if (newUser) {
-        res.status(200).json({ message: 'User successfully registered' });
-      } else {
-        res
-          .status(500)
-          .json({ message: 'There was an error creating a new user' });
-      }
-    } catch (error) {
-      res
-        .status(500)
-        .json({ message: 'There was an error creating a new user', error });
-    }
-  },
+  userController.createUser,
 );
 
 module.exports = Router;
