@@ -1,0 +1,31 @@
+{
+  "name": "40lbs",
+  "version": "1.0.0",
+  "description": "40lbs backend server - postgreSQL",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ruairidhflint/40lbs-backend.git"
+  },
+  "author": "Ruairidh Flint",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ruairidhflint/40lbs-backend/issues"
+  },
+  "homepage": "https://github.com/ruairidhflint/40lbs-backend#readme",
+  "dependencies": {
+    "bcrypt": "^3.0.7",
+    "cors": "^2.8.5",
+    "cross-env": "^7.0.0",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "helmet": "^3.21.2",
+    "jsonwebtoken": "^8.5.1",
+    "knex": "^0.20.8",
+    "pg": "^7.18.1",
+    "sqlite3": "^4.1.1"
+  }
+}
