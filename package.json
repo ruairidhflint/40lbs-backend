@@ -25,6 +25,8 @@
     "helmet": "^3.21.2",
     "jsonwebtoken": "^8.5.1",
     "knex": "^0.20.8",
+    "mailgen": "^2.0.10",
+    "nodemailer": "^6.4.2",
     "pg": "^7.18.1",
     "sqlite3": "^4.1.1",
     "validate.js": "^0.13.1",
