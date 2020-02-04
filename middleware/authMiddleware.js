@@ -1,3 +1,6 @@
+const Validator = require('validatorjs');
+
+
 function checkAllRegisterFieldsPresent(req, res, next) {
   const { email, password, currentWeight } = req.body;
 
