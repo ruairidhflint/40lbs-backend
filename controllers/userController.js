@@ -30,16 +30,24 @@ async function loginUser(req, res) {
     const user = await helpers.getUserByEmail(req.body.email);
     if (!user) {
       res.status(400).json({ message: 'Invalid credentials' });
-    } else if (bcrypt.compareSync(req.body.password, user.password)) {
-      const token = await generateToken(user);
-      res.status(200).json({
-        message: 'Successful log in',
-        user: { id: user.id, currentWeight: user.currentWeight, confirmed: user.confirmed },
-        token,
-      });
-    } else {
+    }
+    const confirm = bcrypt.compareSync(req.body.password, user.password);
+    if (!confirm) {
       res.status(400).json({ message: 'Invalid credentials' });
     }
+    const token = await generateToken(user);
+    if (!user.confirmed) {
+      res.status(200).json({ message: 'Please confirm your account' });
+    }
+    res.status(200).json({
+      message: 'Successful log in',
+      user: {
+        id: user.id,
+        currentWeight: user.currentWeight,
+        confirmed: user.confirmed,
+      },
+      token,
+    });
   } catch (error) {
     res.status(500).json({ message: 'There was a problem logging in.' });
   }
