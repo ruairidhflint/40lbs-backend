@@ -9,7 +9,7 @@ server.use(cors());
 server.use(express.json());
 
 server.get('/', (req, res) => {
-    res.status(200).json({message: "Working", database: process.env.DB_ENV})
-})
+  res.status(200).json({ message: 'Working', database: process.env.DB_ENV });
+});
 
 module.exports = server;
