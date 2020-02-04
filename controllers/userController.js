@@ -9,7 +9,7 @@ async function createUser(req, res) {
     const newUser = await helpers.registerNewUser({
       email,
       password: hashedPassword,
-      current_weight: currentWeight,
+      currentWeight,
     });
     if (newUser) {
       res.status(200).json({ message: 'User successfully registered' });
@@ -34,7 +34,7 @@ async function loginUser(req, res) {
       const token = await generateToken(user);
       res.status(200).json({
         message: 'Successful log in',
-        user: { id: user.id, currentWeight: user.current_weight },
+        user: { id: user.id, currentWeight: user.currentWeight, confirmed: user.confirmed },
         token,
       });
     } else {
