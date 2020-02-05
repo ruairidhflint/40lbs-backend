@@ -32,6 +32,12 @@ function confirmUser(id) {
     .update({ confirmed: true });
 }
 
+function updateCurrentWeight(id, newWeight) {
+  return db('users')
+    .where({ id })
+    .update({ currentWeight: newWeight });
+}
+
 module.exports = {
   getAllUsers,
   getUserByEmail,
@@ -39,4 +45,5 @@ module.exports = {
   registerNewUser,
   deleteUser,
   confirmUser,
+  updateCurrentWeight,
 };
