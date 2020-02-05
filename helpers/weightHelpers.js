@@ -4,14 +4,19 @@ function postNewWeight(newWeight) {
   return db('weight').insert(newWeight, 'id');
 }
 
-function getWeightsById(id) {
+function getRecentWeightsById(id) {
   return db('weight')
     .where({ user_id: id })
     .orderBy('id', 'desc')
     .limit(15);
 }
 
+function getAllWeightsById(id) {
+  return db('weight').where({ user_id: id });
+}
+
 module.exports = {
   postNewWeight,
-  getWeightsById,
+  getRecentWeightsById,
+  getAllWeightsById,
 };
