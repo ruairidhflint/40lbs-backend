@@ -1,6 +1,6 @@
 const bcrypt = require('bcrypt');
 const helpers = require('../helpers/userHelpers');
-const { generateToken } = require('../helpers/jwtHelpers');
+const { generateToken, decodeToken } = require('../helpers/jwtHelpers');
 const { sendEmailConfirmAccount } = require('../helpers/mail');
 
 async function createUser(req, res) {
@@ -56,7 +56,28 @@ async function loginUser(req, res) {
   }
 }
 
+async function confirmUser(req, res) {
+  try {
+    const user = await decodeToken(req.body.token);
+    if (!user) {
+      res.status(400).json({ message: 'Invalid token for user' });
+    }
+    const confirmedUser = await helpers.confirmUser(user.id);
+    if (confirmedUser) {
+      res.status(200).json({ message: 'Account confirmed' });
+    }
+    res
+      .status(400)
+      .json({ message: 'There was a problem confirming your account' });
+  } catch (error) {
+    res
+      .status(500)
+      .json({ message: 'There was an error confirming your account', error });
+  }
+}
+
 module.exports = {
   createUser,
   loginUser,
+  confirmUser,
 };

@@ -21,7 +21,9 @@ async function decodeToken(token) {
   try {
     const decoded = jwt.verify(token, process.env.JWTSecret);
     const user = await helper.getUserByID(decoded.id);
-    if (!user) throw Error('No user with that ID exists');
+    if (!user) {
+      return null;
+    }
     return user;
   } catch (error) {
     return null;

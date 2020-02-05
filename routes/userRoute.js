@@ -17,9 +17,12 @@ Router.post(
   userController.createUser,
 );
 
-Router.post('/login',
-  [authMiddleware.checkLoginDetailsPresent,
-  ],
-  userController.loginUser);
+Router.post(
+  '/login',
+  [authMiddleware.checkLoginDetailsPresent],
+  userController.loginUser,
+);
+
+Router.patch('/confirm', userController.confirmUser);
 
 module.exports = Router;
