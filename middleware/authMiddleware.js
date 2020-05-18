@@ -7,6 +7,7 @@ function checkAllRegisterFieldsPresent(req, res, next) {
     password: 'required|min:8',
     email: 'required|email',
     currentWeight: 'required|numeric',
+    startWeight: 'required|numeric',
   });
   if (validator.fails()) {
     res

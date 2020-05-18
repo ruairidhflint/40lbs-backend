@@ -5,13 +5,14 @@ const { generateToken, decodeToken } = require('../helpers/jwtHelpers');
 const { sendEmailConfirmAccount } = require('../helpers/mail');
 
 async function createUser(req, res) {
-  const { email, password, currentWeight } = req.body;
+  const { email, password, currentWeight, startWeight } = req.body;
   const hashedPassword = bcrypt.hashSync(password, 12);
   try {
     const newUser = await helpers.registerNewUser({
       email,
       password: hashedPassword,
       currentWeight,
+      startWeight,
     });
     if (newUser) {
       const token = await generateToken({ id: newUser[0], email });
@@ -19,7 +20,7 @@ async function createUser(req, res) {
       await weightHelpers.postNewWeight({
         user_id: newUser[0],
         current_weight: currentWeight,
-        date: new Date().toDateString(),
+        date: new Date().toLocaleDateString(),
       });
       res.status(200).json({ message: 'User successfully registered' });
     } else {

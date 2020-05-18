@@ -17,5 +17,6 @@ module.exports = {
   rules: {
     'no-console': 0,
     'func-names': 0,
+    'object-curly-newline': 0
   },
 };
