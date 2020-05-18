@@ -64,7 +64,7 @@ async function confirmUser(req, res) {
     }
     const confirmedUser = await helpers.confirmUser(user.id);
     if (confirmedUser) {
-      res.status(200).json({ message: 'Account confirmed' });
+      res.status(200).json({ message: 'Account confirmed' }).end();
     }
     res
       .status(400)

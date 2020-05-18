@@ -5,7 +5,7 @@ const weightController = require('../controllers/weightController');
 
 const Router = express.Router();
 
-Router.get('/', [authMiddleware.validateUser], (req, res) => {
+Router.get('/', (req, res) => {
   res.status(200).json({ message: 'Weight Route Working' });
 });
 
