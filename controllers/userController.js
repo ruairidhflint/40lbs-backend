@@ -1,5 +1,6 @@
 const bcrypt = require('bcrypt');
 const helpers = require('../helpers/userHelpers');
+const weightHelpers = require('../helpers/weightHelpers');
 const { generateToken, decodeToken } = require('../helpers/jwtHelpers');
 const { sendEmailConfirmAccount } = require('../helpers/mail');
 
@@ -15,6 +16,11 @@ async function createUser(req, res) {
     if (newUser) {
       const token = await generateToken({ id: newUser[0], email });
       sendEmailConfirmAccount({ email }, token, 'https://www.google.com');
+      await weightHelpers.postNewWeight({
+        user_id: newUser[0],
+        current_weight: currentWeight,
+        date: new Date().toDateString(),
+      });
       res.status(200).json({ message: 'User successfully registered' });
     } else {
       res
@@ -64,7 +70,7 @@ async function confirmUser(req, res) {
     }
     const confirmedUser = await helpers.confirmUser(user.id);
     if (confirmedUser) {
-      res.status(200).json({ message: 'Account confirmed' }).end();
+      res.status(200).json({ message: 'Account confirmed' });
     }
     res
       .status(400)
