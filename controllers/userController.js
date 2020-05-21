@@ -16,7 +16,7 @@ async function createUser(req, res) {
     });
     if (newUser) {
       const token = await generateToken({ id: newUser[0], email });
-      sendEmailConfirmAccount({ email }, token, 'https://www.google.com');
+      sendEmailConfirmAccount({ email }, token, process.env.FRONTEND_URL);
       await weightHelpers.postNewWeight({
         user_id: newUser[0],
         current_weight: currentWeight,
