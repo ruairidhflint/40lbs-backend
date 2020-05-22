@@ -13,13 +13,11 @@ async function postNewWeight(req, res) {
       req.body.user_id,
       req.body.current_weight,
     );
-    res
-      .status(202)
-      .json({
-        message: 'Upload successful',
-        data: req.body,
-        newCurrent: updateCurrent,
-      });
+    res.status(202).json({
+      message: 'Upload successful',
+      data: req.body,
+      newCurrent: updateCurrent,
+    });
   } catch (error) {
     res
       .status(500)
@@ -45,13 +43,20 @@ async function getRecentWeightsById(req, res) {
 
 async function getAllWeightsById(req, res) {
   try {
+    const userDetails = await userHelpers.getUserByID(req.user.id);
     const weights = await helpers.getAllWeightsById(req.user.id);
     if (!weights) {
       res
         .status(400)
         .json({ message: 'There was a problem retrieivng your data' });
     }
-    res.status(200).json({ weights });
+    const data = {
+      id: userDetails.id,
+      currentWeight: userDetails.currentWeight,
+      startWeight: userDetails.startWeight,
+      weights,
+    };
+    res.status(200).json({ data });
   } catch (error) {
     res
       .status(500)
