@@ -55,12 +55,17 @@ async function validateUser(req, res, next) {
   if (!authorization) {
     res.status(401).json({ message: 'Please provide a valid token' });
   }
-  const user = await decodeToken(authorization);
-  if (!user) {
-    res.status(401).json({ message: 'Invalid credentials' });
+  try {
+    const user = await decodeToken(authorization);
+    if (!user) {
+      res.status(401).json({ message: 'Invalid credentials' });
+    } else {
+      req.user = user;
+      next();
+    }
+  } catch (err) {
+    console.log(err);
   }
-  req.user = user;
-  return next();
 }
 
 module.exports = {
