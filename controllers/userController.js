@@ -67,14 +67,15 @@ async function confirmUser(req, res) {
     const user = await decodeToken(req.body.token);
     if (!user) {
       res.status(400).json({ message: 'Invalid token for user' });
+    } else {
+      const confirmedUser = await helpers.confirmUser(user.id);
+      if (confirmedUser) {
+        res.status(200).json({ message: 'Account confirmed' });
+      }
+      res
+        .status(400)
+        .json({ message: 'There was a problem confirming your account' });
     }
-    const confirmedUser = await helpers.confirmUser(user.id);
-    if (confirmedUser) {
-      res.status(200).json({ message: 'Account confirmed' });
-    }
-    res
-      .status(400)
-      .json({ message: 'There was a problem confirming your account' });
   } catch (error) {
     res
       .status(500)

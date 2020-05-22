@@ -64,7 +64,7 @@ async function validateUser(req, res, next) {
       next();
     }
   } catch (err) {
-    console.log(err);
+    res.status(500).json({ message: 'Error', error: err.error });
   }
 }
 
