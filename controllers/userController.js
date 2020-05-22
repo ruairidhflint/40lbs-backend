@@ -49,16 +49,11 @@ async function loginUser(req, res) {
     if (!user.confirmed) {
       res.status(200).json({ message: 'Please confirm your account' });
     }
-    const weights = await weightHelpers.getAllWeightsById(user.id);
 
     res.status(200).json({
-      message: 'Successful log in',
       user: {
         id: user.id,
-        currentWeight: user.currentWeight,
-        startWeight: user.startWeight,
         confirmed: user.confirmed,
-        weights,
       },
       token,
     });
